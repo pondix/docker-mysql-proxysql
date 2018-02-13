@@ -28,8 +28,7 @@ Note that you'll need the following tools installed on your host machine:
 - mysql-client (5.7+ recommended)
 - sysbench (1.0.12+ recommended)
 
-Within the `conf` directory you'll also find a Dockerfile for building the ProxySQL 1.4.x Docker Image. In
-addition if you prefer not to use docker-compose you'll also find two separate scripts for launching the 
+In addition if you prefer not to use docker-compose you'll also find two separate scripts for launching the 
 MySQL and ProxySQL instances:
 - docker-mysql.bash
 - docker-proxysql.bash

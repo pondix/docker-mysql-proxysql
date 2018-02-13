@@ -1,6 +1,9 @@
 #!/bin/bash
 MYSQL_PWD=root
 
+# Note: NETWORK_NAME is only used for standalone scripts
+NETWORK_NAME=repl
+
 # Colour init
 BLACK=$(tput setaf 0)
 RED=$(tput setaf 1)

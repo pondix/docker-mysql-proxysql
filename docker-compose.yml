@@ -33,7 +33,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
 
   proxysql:
-    build: ./conf/
+    image: pondix/proxysql:latest
     ports:
       - "16033:6033"
       - "16032:6032"
