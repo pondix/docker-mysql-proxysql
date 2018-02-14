@@ -20,8 +20,6 @@ The MySQL instances (as well as ProxySQL) have separate directories with their r
 in the conf directory. You can override any of the MySQL 5.7 variables by editing the `my.cnf` located
 in the respective subdirectory under `conf` for each container.
 
-The cluster can be created by running `./docker-cluster.bash` from the clone directory.
-
 Note that you'll need the following tools installed on your host machine:
 - docker-ce / docker-ee (17.12+ recommended)
 - docker-compose
