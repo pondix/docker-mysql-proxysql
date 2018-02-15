@@ -32,9 +32,9 @@ in the conf directory. You can override any of the MySQL 5.7 variables by editin
 in the respective subdirectory under `conf` for each container (i.e. `conf/mysql-master/my.cnf`,
 `conf/mysql-slave1/my.cnf` or `conf/mysql-slave2/my.cnf`).
 
-Note that you'll need the following tools installed on your host machine:
+Note that you'll need the following pre-requisites installed on your host machine:
 - docker-ce / docker-ee (17.12+ recommended)
-- docker-compose
+- docker-compose (1.19+ recommended)
 - mysql-client (5.7+ recommended)
 - sysbench (1.0.12+ recommended)
 
