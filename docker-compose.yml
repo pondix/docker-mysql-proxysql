@@ -19,6 +19,8 @@ services:
       - ./conf/mysql-slave1:/etc/mysql/conf.d
     networks:
       - backend
+    depends_on:
+      - mysql-master
     environment:
       - MYSQL_ROOT_PASSWORD=root
   mysql-slave2:
@@ -29,6 +31,8 @@ services:
       - ./conf/mysql-slave2:/etc/mysql/conf.d
     networks:
       - backend
+    depends_on:
+      - mysql-master
     environment:
       - MYSQL_ROOT_PASSWORD=root
 
@@ -39,6 +43,10 @@ services:
       - "16032:6032"
     volumes:
       - ./conf/proxysql/proxysql.cnf:/etc/proxysql.cnf
+    depends_on:
+      - mysql-master
+      - mysql-slave1
+      - mysql-slave2
     networks:
       - frontend
       - backend
