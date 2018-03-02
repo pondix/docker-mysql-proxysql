@@ -1,5 +1,6 @@
 #!/bin/bash
 . constants
+
 PREP_THREADS=10
 RUN_THREADS=2
 NUM_TABLES=10

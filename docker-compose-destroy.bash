@@ -1,11 +1,11 @@
 #!/bin/bash
+. constants
+
 printf "$BRIGHT"
 printf "##################################################################################\n"
-printf "# Stopping ProxySQL / MySQL Docker Cluster...                                    #\n"
+printf "# Stopping ProxySQL / Orchestrator / MySQL Docker Cluster instances!             #\n"
 printf "##################################################################################\n"
 printf "$NORMAL"
-
-. constants
 
 docker-compose stop
 docker-compose rm -f
