@@ -13,6 +13,9 @@ do
 done
 printf "$LIME_YELLOW\n"
 
+printf "$POWDER_BLUE[$(date)] Configuring slave 1...$LIME_YELLOW\n"
+mysql -h127.0.0.1 -P13306 -uroot -p$MYSQL_PWD -e"SET GLOBAL READ_ONLY=0;" > /dev/null 2>&1
+
 printf "$YELLOW[$(date)] Waiting for MySQL service on slave 1"
 # INIT REPL ONCE SLAVE IS UP
 RC=1

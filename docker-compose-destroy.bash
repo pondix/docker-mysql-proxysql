@@ -9,5 +9,7 @@ printf "$NORMAL"
 
 docker-compose stop
 docker-compose rm -f
+docker volume prune -f
+docker network prune -f
 printf "$POWDER_BLUE$BRIGHT[$(date)] Deprovisioning COMPLETE!$NORMAL\n"
 
