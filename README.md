@@ -44,6 +44,7 @@ Note that you'll want the following pre-requisites installed on your host machin
 - mysql-client (5.7+ required)
 - sysbench (1.0.12+ recommended if benchmarking)
 - orchestrator-client (3.0.8+ recommended if administering Orchestrator via CLI)
+- jq (required for Orchestrator)
 
 In addition if you prefer not to use docker-compose you'll also find some scripts for launching the 
 MySQL and ProxySQL instances without docker-compose in the `legacy/` directory:
