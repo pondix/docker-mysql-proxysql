@@ -1,0 +1,44 @@
+--- proxysql/src/main.cpp	2018-04-16 13:25:45.020283474 +0000
++++ proxysql_fix/src/main.cpp	2018-04-16 13:17:50.796943114 +0000
+@@ -23,6 +23,33 @@
+ #undef dlerror
+ #endif
+ 
++struct dh_st {
++    /*
++     * This first argument is used to pick up errors when a DH is passed
++     * instead of a EVP_PKEY
++     */
++    int pad;
++    int version;
++    BIGNUM *p;
++    BIGNUM *g;
++    long length;                /* optional */
++    BIGNUM *pub_key;            /* g^x % p */
++    BIGNUM *priv_key;           /* x */
++    int flags;
++    BN_MONT_CTX *method_mont_p;
++    /* Place holders if we want to do X9.42 DH */
++    BIGNUM *q;
++    BIGNUM *j;
++    unsigned char *seed;
++    int seedlen;
++    BIGNUM *counter;
++    int references;
++    CRYPTO_EX_DATA ex_data;
++    const DH_METHOD *meth;
++    ENGINE *engine;
++    CRYPTO_RWLOCK *lock;
++};
++
+ static pthread_mutex_t *lockarray;
+ #include <openssl/crypto.h>
+ 
+@@ -473,7 +500,6 @@
+ 	EVP_PKEY_free(pkey);
+ 
+ 
+-	CRYPTO_mem_leaks(bio_err);
+ 	BIO_free(bio_err);
+ }
+ 

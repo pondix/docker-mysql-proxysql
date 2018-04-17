@@ -14,3 +14,4 @@ printf "$LIME_YELLOW\n"
 printf "$POWDER_BLUE[$(date)] Configuring ProxySQL...$LIME_YELLOW\n"
 
 mysql -uradmin -pradmin -h127.0.0.1 -P16032 < $(pwd)/conf/proxysql/config.sql
+
