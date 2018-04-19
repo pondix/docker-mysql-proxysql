@@ -1,4 +1,3 @@
-
 FROM debian:stretch
 
 MAINTAINER Nikolaos Vyzas <pondix@gmail.com>

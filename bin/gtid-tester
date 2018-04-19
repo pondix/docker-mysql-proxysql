@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+
+import threading
+import MySQLdb
+import uuid
+import random
+import time
+
+iterations = 100
+threads = 16
+
+def thread_runner():
+    db = MySQLdb.connect(host="127.0.0.1", port=16033, user="root" , passwd="root")
+    cursor = db.cursor()
+    for counter in range(iterations):
+        db.autocommit(False)
+        cursor.execute("INSERT INTO test.user VALUES (null,'%s','%s',null,%d);" % (uuid.uuid4(),uuid.uuid4(),random.randrange(0, 10001, 2)))
+        db.commit()
+        time.sleep(0.5)
+        cursor.execute("SELECT * FROM test.user;")
+        result = cursor.fetchall()
+        for row in result:
+            print(row)
+    db.close()
+
+if __name__ == "__main__":
+    db = MySQLdb.connect(host="127.0.0.1", port=16033, user="root" , passwd="root")
+    cursor = db.cursor()
+
+    try:
+ 
+        cursor.execute("CREATE DATABASE IF NOT EXISTS test;")
+        cursor.execute("DROP TABLE IF EXISTS test.user")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS test.user (
+                          id int(11) NOT NULL AUTO_INCREMENT,
+                          name varchar(45) NOT NULL,
+                          email varchar(45) NOT NULL,
+                          nick varchar(45) DEFAULT NULL,
+                          address_id int(11) NOT NULL,
+                          PRIMARY KEY (id),
+                          UNIQUE KEY email_UNIQUE (email)
+                          ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;""")
+
+        thread_stack = []
+
+        for thread_iter in range(threads):
+            thread_stack.append(threading.Thread(target=thread_runner))
+
+        for thread in thread_stack:
+            thread.start()
+
+    except Exception as e:
+        print(e)
+        #db.rollback()
+    finally:
+        db.close()
+
