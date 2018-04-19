@@ -5,33 +5,42 @@ import MySQLdb
 import uuid
 import random
 import time
+import sys
 
-iterations = 100
-threads = 16
+iterations = 1000
+threads = 4
 
 def thread_runner():
-    db = MySQLdb.connect(host="127.0.0.1", port=16033, user="root" , passwd="root")
-    cursor = db.cursor()
-    for counter in range(iterations):
-        db.autocommit(False)
-        cursor.execute("INSERT INTO test.user VALUES (null,'%s','%s',null,%d);" % (uuid.uuid4(),uuid.uuid4(),random.randrange(0, 10001, 2)))
-        db.commit()
-        time.sleep(0.5)
-        cursor.execute("SELECT * FROM test.user;")
-        result = cursor.fetchall()
-        for row in result:
-            print(row)
-    db.close()
+    try:
+        db = MySQLdb.connect(host="127.0.0.1", port=16033, user="root" , passwd="root")
+
+        for counter in range(iterations):
+            cursor = db.cursor(MySQLdb.cursors.DictCursor)
+            db.autocommit(False)
+            cursor.execute("INSERT INTO test.user VALUES (null,'%s','%s',null,%d);" % (uuid.uuid4(),uuid.uuid4(),random.randrange(0, 10001, 2)))
+            db.commit()
+            time.sleep(0.5)
+            cursor.execute("SELECT count(*) FROM test.user;")
+            count = cursor.fetchone()
+
+        db.close()
+
+    except Exception as e:
+        if e[0] == -1:
+            pass
+        else:
+            print(e)
 
 if __name__ == "__main__":
-    db = MySQLdb.connect(host="127.0.0.1", port=16033, user="root" , passwd="root")
-    cursor = db.cursor()
+
+    dbg = MySQLdb.connect(host="127.0.0.1", port=16033, user="root" , passwd="root")
+    gcursor = dbg.cursor(MySQLdb.cursors.DictCursor)
 
     try:
  
-        cursor.execute("CREATE DATABASE IF NOT EXISTS test;")
-        cursor.execute("DROP TABLE IF EXISTS test.user")
-        cursor.execute("""CREATE TABLE IF NOT EXISTS test.user (
+        gcursor.execute("CREATE DATABASE IF NOT EXISTS test;")
+        gcursor.execute("DROP TABLE IF EXISTS test.user")
+        gcursor.execute("""CREATE TABLE IF NOT EXISTS test.user (
                           id int(11) NOT NULL AUTO_INCREMENT,
                           name varchar(45) NOT NULL,
                           email varchar(45) NOT NULL,
@@ -43,15 +52,23 @@ if __name__ == "__main__":
 
         thread_stack = []
 
+        print("Running datawriter for %d iterations using %d threads" % (iterations, threads))
+
         for thread_iter in range(threads):
+            print("Creating thread instance %d..." % thread_iter)
             thread_stack.append(threading.Thread(target=thread_runner))
+
+        print("Datawriter is now running... please wait for completion")
 
         for thread in thread_stack:
             thread.start()
 
+        for thread in thread_stack:
+            thread.join()
+
+        gcursor.execute("SELECT @@hostname,count(*) FROM test.user;")
+        print("All threads completed, rows written: %s" % gcursor.fetchone()['count(*)'])
+
     except Exception as e:
         print(e)
-        #db.rollback()
-    finally:
-        db.close()
 

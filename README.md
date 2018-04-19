@@ -1,7 +1,7 @@
 ProxySQL / Orchestrator / MySQL Docker Testing
 ==============================================
 
-* THIS IS THE GTID_TUTORIAL BRANCH
+* THIS IS THE GTID-TUTORIAL BRANCH
 
 This repository contains a docker-compose.yml used to launch a small cluster consisting of 3x
 MySQL 5.7 containers (1x Master and 2x Slaves), 3x Orchestrator nodes connected via RAFT and 
@@ -16,6 +16,7 @@ Note that you'll want the following pre-requisites installed on your host machin
 - sysbench (1.0.12+ recommended if benchmarking)
 - orchestrator-client (3.0.8+ recommended if administering Orchestrator via CLI)
 - jq (required for Orchestrator)
+- MySQL-python (required for the gtid-tester script)
 
 Once the cluster is initialised, replication is started and a sysbench dataset is prepared. After
 that a short sysbench test is executed automatically. To launch a new cluster for the FIRST TIME please
@@ -44,13 +45,13 @@ in the respective subdirectory under `conf` for each container (i.e. `conf/mysql
 `conf/mysql/mysql2/my.cnf` or `conf/mysql/mysql3/my.cnf`). Its also possible to edit the ProxySQL and
 Orchestrator config files as needed.
 
-If you would like to run the benchmark just execute:
+If you would like to run `gtid-tester` just execute:
 
 ```bash
-bin/docker-benchmark.bash
+bin/gtid-tester
 ```
 
-This script will drop / create the sysbench database, create a test dataset and run the benchmark. You can
-edit the file and tailor this behaviour as you would like. Please be aware that this is called during the 
-provisioning stage so its best to make a copy of the file with your own benchmarks.
+This script will drop / create the test database, create a user table and run for 1000 iterations using 4x
+threads by default. You can edit the file and tailor this behaviour as you would like. 
+
 
