@@ -5,7 +5,7 @@ ProxySQL / Orchestrator / MySQL Docker Testing
 
 This repository contains a docker-compose.yml used to launch a small cluster consisting of 3x
 MySQL 5.7 containers (1x Master and 2x Slaves), 3x Orchestrator nodes connected via RAFT and 
-a ProxySQL 1.4.x container all connected via a frontend / backend network. ProxySQL is automatically 
+a ProxySQL 2.0.x container all connected via a frontend / backend network. ProxySQL is automatically 
 configured with 2x hostgroups, a writer hostgroup used as the default hostgroup and a reader 
 hostgroup for all SELECT statements.
 
