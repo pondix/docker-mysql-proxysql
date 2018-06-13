@@ -3,8 +3,9 @@ INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,commen
 INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (1,'127.0.0.1',13306,1,'mysql1');
 INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (1,'127.0.0.1',13307,1,'mysql2');
 INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (1,'127.0.0.1',13308,1,'mysql3');
-DELETE FROM mysql_replication_hostgroups;
-INSERT INTO mysql_replication_hostgroups (writer_hostgroup, reader_hostgroup, comment) VALUES (0,1,'');
+
+DELETE FROM mysql_group_replication_hostgroups;
+INSERT INTO mysql_group_replication_hostgroups (writer_hostgroup,backup_writer_hostgroup,reader_hostgroup,offline_hostgroup,active,max_writers,writer_is_also_reader,max_transactions_behind) VALUES (0,4,1,6,1,1,1,0);
 LOAD MYSQL SERVERS TO RUNTIME;
 SAVE MYSQL SERVERS TO DISK;
 
