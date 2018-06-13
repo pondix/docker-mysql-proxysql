@@ -1,6 +1,7 @@
 version: "2.0"
 services:
   mysql1:
+    hostname: mysql1
     image: mysql:5.7
     ports: 
       - "13306:3306"
@@ -11,6 +12,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
   mysql2:
+    hostname: mysql2
     image: mysql:5.7
     ports: 
       - "13307:3306"
@@ -23,6 +25,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
   mysql3:
+    hostname: mysql3
     image: mysql:5.7
     ports: 
       - "13308:3306"
@@ -47,48 +50,6 @@ services:
       - mysql3
     networks:
       - frontend
-      - backend
-  orc1:
-    build: ./conf/orchestrator/
-    ports:
-      - "23101:3000"
-    volumes:
-      - ./conf/orchestrator/orc1/orchestrator.conf.json:/etc/orchestrator.conf.json
-      - ./conf/orchestrator/remove-proxysql-host.bash:/root/remove-proxysql-host.bash
-    depends_on:
-      - mysql1
-      - mysql2
-      - mysql3
-      - proxysql
-    networks:
-      - backend
-  orc2:
-    build: ./conf/orchestrator/
-    ports:
-      - "23102:3000"
-    volumes:
-      - ./conf/orchestrator/orc2/orchestrator.conf.json:/etc/orchestrator.conf.json
-      - ./conf/orchestrator/remove-proxysql-host.bash:/root/remove-proxysql-host.bash
-    depends_on:
-      - mysql1
-      - mysql2
-      - mysql3
-      - proxysql
-    networks:
-      - backend
-  orc3:
-    build: ./conf/orchestrator/
-    ports:
-      - "23103:3000"
-    volumes:
-      - ./conf/orchestrator/orc3/orchestrator.conf.json:/etc/orchestrator.conf.json
-      - ./conf/orchestrator/remove-proxysql-host.bash:/root/remove-proxysql-host.bash
-    depends_on:
-      - mysql1
-      - mysql2
-      - mysql3
-      - proxysql
-    networks:
       - backend
 networks:
   frontend:

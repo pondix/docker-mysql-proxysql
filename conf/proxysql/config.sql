@@ -1,10 +1,10 @@
 DELETE FROM mysql_servers;
-INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag) VALUES (0,'mysql1',3306,1);
-INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag) VALUES (1,'mysql1',3306,1);
-INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag) VALUES (1,'mysql2',3306,1);
-INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag) VALUES (1,'mysql3',3306,1);
+INSERT INTO mysql_servers (hostgroup_id,hostname,port) VALUES (0,'mysql1',3306);
+INSERT INTO mysql_servers (hostgroup_id,hostname,port) VALUES (1,'mysql1',3306);
+INSERT INTO mysql_servers (hostgroup_id,hostname,port) VALUES (1,'mysql2',3306);
+INSERT INTO mysql_servers (hostgroup_id,hostname,port) VALUES (1,'mysql3',3306);
 DELETE FROM mysql_replication_hostgroups;
-INSERT INTO mysql_replication_hostgroups VALUES (0,1,'');
+INSERT INTO mysql_group_replication_hostgroups (writer_hostgroup,backup_writer_hostgroup,reader_hostgroup,offline_hostgroup,active,max_writers,writer_is_also_reader,max_transactions_behind) VALUES (0,4,1,6,1,1,1,0);
 LOAD MYSQL SERVERS TO RUNTIME;
 SAVE MYSQL SERVERS TO DISK;
 
