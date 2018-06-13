@@ -77,6 +77,7 @@ SELECT * FROM performance_schema.replication_group_members;"
 printf "$YELLOW[$(date)] Adding ProxySQL cluster state monitor script and user:"
 mysql -h127.0.0.1 -P13306 -uroot -p$MYSQL_PWD < ./conf/mysql/addition_to_sys.sql 2>&1
 mysql -h127.0.0.1 -P13306 -uroot -p$MYSQL_PWD -e"GRANT usage,replication client on *.* to monitor@'%' identified by 'monitor';" > /dev/null 2>&1 
+mysql -h127.0.0.1 -P13306 -uroot -p$MYSQL_PWD -e"GRANT SELECT on sys.* to monitor@'%';" > /dev/null 2>&1
 
 printf "$POWDER_BLUE$BRIGHT[$(date)] MySQL Provisioning COMPLETE!$NORMAL\n"
 
