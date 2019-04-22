@@ -34,6 +34,39 @@ services:
       - mysql1
     environment:
       - MYSQL_ROOT_PASSWORD=root
+  binlog_reader1:
+    image: renecannao/proxysql_mysqlbinlog:ubuntu18
+    ports:
+      - "14306:6020"
+    volumes:
+      - ./entrypoint/reader/reader1:/etc/proxysql_binlog_reader
+    entrypoint: /etc/proxysql_binlog_reader/entrypoint.sh  
+    networks:
+      - backend
+    depends_on:
+      - mysql1
+  binlog_reader2:
+    image: renecannao/proxysql_mysqlbinlog:ubuntu18
+    ports:
+      - "14307:6020"
+    volumes:
+      - ./entrypoint/reader/reader2:/etc/proxysql_binlog_reader
+    entrypoint: /etc/proxysql_binlog_reader/entrypoint.sh  
+    networks:
+      - backend
+    depends_on:
+      - mysql2
+  binlog_reader3:
+    image: renecannao/proxysql_mysqlbinlog:ubuntu18
+    ports:
+      - "14308:6020"
+    volumes:
+      - ./entrypoint/reader/reader3:/etc/proxysql_binlog_reader
+    entrypoint: /etc/proxysql_binlog_reader/entrypoint.sh  
+    networks:
+      - backend
+    depends_on:
+      - mysql3
   proxysql:
     image: pondix/proxysql:latest-stretch
     ports:
