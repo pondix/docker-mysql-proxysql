@@ -10,6 +10,7 @@ SAVE MYSQL SERVERS TO DISK;
 
 DELETE FROM mysql_users;
 INSERT INTO mysql_users (username,password,active) values ('root','root',1);
+INSERT INTO mysql_users (username,password,active) values ('user','user',1);
 LOAD MYSQL USERS TO RUNTIME;
 SAVE MYSQL USERS TO DISK; 
 

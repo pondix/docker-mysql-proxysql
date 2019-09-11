@@ -1,16 +1,24 @@
 #!/bin/bash
 . constants
-printf "$YELLOW[$(date)] Waiting for ProxySQL service to initialize"
+printf "[$(date)] Waiting for ProxySQL service to initialize"
+TIMEOUT=0
+TIMEOUT_LIMIT=300
 RC=1
 while [ $RC -eq 1 ]
 do
+  if [ $TIMEOUT -gt $TIMEOUT_LIMIT ]
+  then
+    echo "[ERROR] Timeout of $TIMEOUT_LIMIT seconds reached while connecting to ProxySQL"
+    exit 1
+  fi
   sleep 1
   printf "."
-  mysqladmin ping -h127.0.0.1 -P16032 -uradmin -pradmin  > /dev/null 2>&1
+  mysql -e"select 1;" -h127.0.0.1 -P6032 -uadmin -padmin  > /dev/null 2>&1
   RC=$?
+  TIMEOUT=$((TIMEOUT+1))
 done
-printf "$LIME_YELLOW\n"
+printf "\n"
 
-printf "$POWDER_BLUE[$(date)] Configuring ProxySQL...$LIME_YELLOW\n"
+printf "[$(date)] Configuring ProxySQL...\n"
 
-mysql -uradmin -pradmin -h127.0.0.1 -P16032 < $(pwd)/conf/proxysql/config.sql
+mysql -uadmin -padmin -h127.0.0.1 -P6032 < $(pwd)/conf/proxysql/config-local.sql

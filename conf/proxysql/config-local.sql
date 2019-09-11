@@ -1,16 +1,17 @@
 DELETE FROM mysql_servers;
-INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (0,'127.0.0.1',13306,1,'mysql1');
-INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (1,'127.0.0.1',13306,1,'mysql1');
-INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (1,'127.0.0.1',13307,1,'mysql2');
-INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (1,'127.0.0.1',13308,1,'mysql3');
+INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (0,'127.0.0.1',13306,180,'mysql1');
+INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (1,'127.0.0.1',13306,180,'mysql1');
+INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (1,'127.0.0.1',13307,180,'mysql2');
+INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag,comment) VALUES (1,'127.0.0.1',13308,180,'mysql3');
 
-DELETE FROM mysql_group_replication_hostgroups;
-INSERT INTO mysql_group_replication_hostgroups (writer_hostgroup,backup_writer_hostgroup,reader_hostgroup,offline_hostgroup,active,max_writers,writer_is_also_reader,max_transactions_behind) VALUES (0,4,1,6,1,1,1,0);
+DELETE FROM mysql_replication_hostgroups;
+INSERT INTO mysql_replication_hostgroups (writer_hostgroup,reader_hostgroup) VALUES (0,1);
 LOAD MYSQL SERVERS TO RUNTIME;
 SAVE MYSQL SERVERS TO DISK;
 
 DELETE FROM mysql_users;
 INSERT INTO mysql_users (username,password,active) values ('root','root',1);
+INSERT INTO mysql_users (username,password,active) values ('user','user',1);
 LOAD MYSQL USERS TO RUNTIME;
 SAVE MYSQL USERS TO DISK; 
 
