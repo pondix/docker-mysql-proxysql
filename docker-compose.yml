@@ -35,7 +35,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
   proxysql:
-    image: pondix/proxysql:latest-stretch
+    image: proxysql/proxysql:latest
     ports:
       - "16033:6033"
       - "16032:6032"

@@ -1,28 +1,10 @@
-FROM alpine:3.8
+FROM debian:stretch
+
+MAINTAINER Nikolaos Vyzas <nick@proxysql.com>
 
 EXPOSE 3000
 
-ENV GOPATH=/tmp/go
+RUN apt update && apt -y install wget && wget https://github.com/github/orchestrator/releases/download/v3.1.2/orchestrator_3.1.2_amd64.deb && apt -y install ./orchestrator_3.1.2_amd64.deb && mkdir /var/lib/orchestrator && rm -rf /var/lib/apt/lists/*
 
-RUN set -ex \
-    && apk add --update --no-cache bash \
-    && apk add --update --no-cache --virtual .build-deps \
-        rsync \
-        git \
-        go \
-        build-base \
-    && apk add mysql-client \
-    && cd /tmp \
-    && { go get -d github.com/github/orchestrator ; : ; } \
-    && cd $GOPATH/src/github.com/github/orchestrator \
-    && bash build.sh -b \
-    && rsync -av $(find /tmp/orchestrator-release -type d -name orchestrator -maxdepth 2)/ / \
-    && rsync -av $(find /tmp/orchestrator-release -type d -name orchestrator-cli -maxdepth 2)/ / \
-    && cd / \
-    && apk del .build-deps \
-    && rm -rf /tmp/* \
-    && mkdir -p /var/lib/orchestrator
-
-WORKDIR /usr/local/orchestrator
 CMD /usr/local/orchestrator/orchestrator http
 
