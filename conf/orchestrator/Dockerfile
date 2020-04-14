@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:latest
 
 EXPOSE 3000
 
@@ -16,8 +16,8 @@ RUN set -ex \
     && { go get -d github.com/github/orchestrator ; : ; } \
     && cd $GOPATH/src/github.com/github/orchestrator \
     && bash build.sh -b \
-    && rsync -av $(find /tmp/orchestrator-release -type d -name orchestrator -maxdepth 2)/ / \
-    && rsync -av $(find /tmp/orchestrator-release -type d -name orchestrator-cli -maxdepth 2)/ / \
+    && mkdir -p /usr/local/orchestrator \
+    && cp build/bin/orchestrator /usr/local/orchestrator/ \
     && cd / \
     && apk del .build-deps \
     && rm -rf /tmp/* \
