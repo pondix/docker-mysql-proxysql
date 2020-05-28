@@ -13,8 +13,8 @@ RUN set -ex \
         build-base \
     && apk add mysql-client \
     && cd /tmp \
-    && { go get -d github.com/github/orchestrator ; : ; } \
-    && cd $GOPATH/src/github.com/github/orchestrator \
+    && { go get -d github.com/openark/orchestrator ; : ; } \
+    && cd $GOPATH/src/github.com/openark/orchestrator \
     && bash build.sh -b \
     && mkdir -p /usr/local/orchestrator \
     && cp build/bin/orchestrator /usr/local/orchestrator/ \
