@@ -2,7 +2,7 @@ version: "2.0"
 services:
   mysql1:
     image: mysql:5.7
-    ports: 
+    ports:
       - "13306:3306"
     volumes:
       - ./conf/mysql/mysql1:/etc/mysql/conf.d
@@ -12,7 +12,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
   mysql2:
     image: mysql:5.7
-    ports: 
+    ports:
       - "13307:3306"
     volumes:
       - ./conf/mysql/mysql2:/etc/mysql/conf.d
@@ -24,7 +24,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
   mysql3:
     image: mysql:5.7
-    ports: 
+    ports:
       - "13308:3306"
     volumes:
       - ./conf/mysql/mysql3:/etc/mysql/conf.d
@@ -40,7 +40,7 @@ services:
       - "14306:6020"
     volumes:
       - ./entrypoint/reader/reader1:/etc/proxysql_binlog_reader
-    entrypoint: /etc/proxysql_binlog_reader/entrypoint.sh  
+    entrypoint: /etc/proxysql_binlog_reader/entrypoint.sh
     networks:
       - backend
     depends_on:
@@ -51,7 +51,7 @@ services:
       - "14307:6020"
     volumes:
       - ./entrypoint/reader/reader2:/etc/proxysql_binlog_reader
-    entrypoint: /etc/proxysql_binlog_reader/entrypoint.sh  
+    entrypoint: /etc/proxysql_binlog_reader/entrypoint.sh
     networks:
       - backend
     depends_on:
@@ -62,13 +62,13 @@ services:
       - "14308:6020"
     volumes:
       - ./entrypoint/reader/reader3:/etc/proxysql_binlog_reader
-    entrypoint: /etc/proxysql_binlog_reader/entrypoint.sh  
+    entrypoint: /etc/proxysql_binlog_reader/entrypoint.sh
     networks:
       - backend
     depends_on:
       - mysql3
   proxysql1:
-    image: renecannao/proxysql_205_pltx19:debian9
+    image: proxysql/proxysql:latest
     ports:
       - "16033:6033"
       - "16032:6032"
@@ -83,7 +83,7 @@ services:
       - frontend
       - backend
   proxysql2:
-    image: renecannao/proxysql_205_pltx19:debian9
+    image: proxysql/proxysql:latest
     ports:
       - "16043:6033"
       - "16042:6032"
@@ -97,7 +97,7 @@ services:
       - frontend
       - backend
   proxysql3:
-    image: renecannao/proxysql_205_pltx19:debian9
+    image: proxysql/proxysql:latest
     ports:
       - "16053:6033"
       - "16052:6032"
