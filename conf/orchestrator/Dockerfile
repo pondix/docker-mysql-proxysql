@@ -1,28 +1,6 @@
-FROM alpine:latest
+# Use stable release of orchestrator
+FROM openarkcode/orchestrator:latest
 
-EXPOSE 3000
-
-ENV GOPATH=/tmp/go
-
-RUN set -ex \
-    && apk add --update --no-cache bash \
-    && apk add --update --no-cache --virtual .build-deps \
-        rsync \
-        git \
-        go \
-        build-base \
-    && apk add mysql-client \
-    && cd /tmp \
-    && { go get -d github.com/openark/orchestrator ; : ; } \
-    && cd $GOPATH/src/github.com/openark/orchestrator \
-    && bash build.sh -b \
-    && mkdir -p /usr/local/orchestrator \
-    && cp build/bin/orchestrator /usr/local/orchestrator/ \
-    && cd / \
-    && apk del .build-deps \
-    && rm -rf /tmp/* \
-    && mkdir -p /var/lib/orchestrator
-
-WORKDIR /usr/local/orchestrator
-CMD /usr/local/orchestrator/orchestrator http
-
+# Needed because upstream Dockerfile doesn't create this directory, so our config
+# breaks the container.
+RUN mkdir -p /var/lib/orchestrator
