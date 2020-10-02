@@ -1,7 +1,7 @@
 version: "2.0"
 services:
   mysql1:
-    image: mysql:5.7
+    image: mariadb:10.4
     ports: 
       - "13306:3306"
     volumes:
@@ -11,7 +11,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
   mysql2:
-    image: mysql:5.7
+    image: mariadb:10.4
     ports: 
       - "13307:3306"
     volumes:
@@ -23,7 +23,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
   mysql3:
-    image: mysql:5.7
+    image: mariadb:10.4
     ports: 
       - "13308:3306"
     volumes:

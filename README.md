@@ -1,8 +1,8 @@
-ProxySQL / Orchestrator / MySQL Docker Testing
+ProxySQL / Orchestrator / MariaDB Docker Testing
 ==============================================
 
 This repository contains a docker-compose.yml used to launch a small cluster consisting of 3x
-MySQL 5.7 containers (1x Master and 2x Slaves), 3x Orchestrator nodes connected via RAFT and 
+MariaDB 5.7 containers (1x Master and 2x Slaves), 3x Orchestrator nodes connected via RAFT and 
 a ProxySQL 1.4.x container all connected via a frontend / backend network. ProxySQL is automatically 
 configured with 2x hostgroups, a writer hostgroup used as the default hostgroup and a reader 
 hostgroup for all SELECT statements.
@@ -32,8 +32,8 @@ To stop the instances and destroy the containers execute:
 sudo ./docker-compose-destroy.bash
 ```
 
-The MySQL, Orchestrator and ProxySQL hosts have separate directories with their respective configuration
-in the conf directory. You can override any of the MySQL 5.7 variables by editing the `my.cnf` located
+The MariaDB, Orchestrator and ProxySQL hosts have separate directories with their respective configuration
+in the conf directory. You can override any of the MariaDB 5.7 variables by editing the `my.cnf` located
 in the respective subdirectory under `conf` for each container (i.e. `conf/mysql/mysql1/my.cnf`,
 `conf/mysql/mysql2/my.cnf` or `conf/mysql/mysql3/my.cnf`). Its also possible to edit the ProxySQL and
 Orchestrator config files as needed.
@@ -47,7 +47,7 @@ Note that you'll want the following pre-requisites installed on your host machin
 - jq (required for Orchestrator)
 
 In addition if you prefer not to use docker-compose you'll also find some scripts for launching the 
-MySQL and ProxySQL instances without docker-compose in the `legacy/` directory:
+MariaDB and ProxySQL instances without docker-compose in the `legacy/` directory:
 - legacy/docker-mysql.bash
 - legacy/docker-proxysql.bash
 
