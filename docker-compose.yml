@@ -41,7 +41,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
   proxysql:
-    build: conf/proxysql/
+    image: proxysql/proxysql:2.1.0
     ports:
       - "16033:6033"
       - "16032:6032"
