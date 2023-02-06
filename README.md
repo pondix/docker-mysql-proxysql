@@ -2,10 +2,10 @@ ProxySQL / Orchestrator / MySQL Docker Testing
 ==============================================
 
 This repository contains a docker-compose.yml used to launch a small cluster consisting of 3x
-MySQL 5.7 containers (1x Master and 2x Slaves), 3x Orchestrator nodes connected via RAFT and 
-a ProxySQL 1.4.x container all connected via a frontend / backend network. ProxySQL is automatically 
-configured with 2x hostgroups, a writer hostgroup used as the default hostgroup and a reader 
-hostgroup for all SELECT statements.
+MySQL 8.0 containers (1x Primary and 2x Replicas), 3x Orchestrator nodes connected via RAFT and 
+a ProxySQL (latest) container all connected via a frontend / backend network as well as Percona
+PMM for monitoring the instances. ProxySQL is automatically configured with 2x hostgroups, a 
+writer hostgroup used as the default hostgroup and a reader hostgroup for all SELECT statements.
 
 Once the cluster is initialised, replication is started and a sysbench dataset is prepared. After
 that a short sysbench test is executed automatically. To launch a new cluster for the FIRST TIME please
@@ -33,7 +33,7 @@ sudo ./docker-compose-destroy.bash
 ```
 
 The MySQL, Orchestrator and ProxySQL hosts have separate directories with their respective configuration
-in the conf directory. You can override any of the MySQL 5.7 variables by editing the `my.cnf` located
+in the conf directory. You can override any of the MySQL 8.0 variables by editing the `my.cnf` located
 in the respective subdirectory under `conf` for each container (i.e. `conf/mysql/mysql1/my.cnf`,
 `conf/mysql/mysql2/my.cnf` or `conf/mysql/mysql3/my.cnf`). Its also possible to edit the ProxySQL and
 Orchestrator config files as needed.
