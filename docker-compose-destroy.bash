@@ -13,3 +13,8 @@ docker volume prune -f
 docker network prune -f
 printf "$POWDER_BLUE$BRIGHT[$(date)] Deprovisioning COMPLETE!$NORMAL\n"
 
+
+# PMM test logic
+#docker stop pmm-client
+#docker rm -f pmm-client-data
+

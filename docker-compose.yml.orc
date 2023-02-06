@@ -2,7 +2,6 @@ version: "2.0"
 services:
   mysql1:
     image: mysql:8.0.30
-    container_name: mysql1
     ports: 
       - "13306:3306"
     volumes:
@@ -13,7 +12,6 @@ services:
       - MYSQL_ROOT_PASSWORD=root
   mysql2:
     image: mysql:8.0.30
-    container_name: mysql2
     ports: 
       - "13307:3306"
     volumes:
@@ -26,7 +24,6 @@ services:
       - MYSQL_ROOT_PASSWORD=root
   mysql3:
     image: mysql:8.0.30
-    container_name: mysql3
     ports: 
       - "13308:3306"
     volumes:
@@ -39,7 +36,6 @@ services:
       - MYSQL_ROOT_PASSWORD=root
   proxysql:
     image: proxysql/proxysql:latest
-    container_name: proxysql
     ports:
       - "16033:6033"
       - "16032:6032"
@@ -53,9 +49,7 @@ services:
       - frontend
       - backend
   orc1:
-    platform: linux/amd64
     build: ./conf/orchestrator/
-    container_name: orc1
     ports:
       - "23101:3000"
     volumes:
@@ -69,9 +63,7 @@ services:
     networks:
       - backend
   orc2:
-    platform: linux/amd64
     build: ./conf/orchestrator/
-    container_name: orc2
     ports:
       - "23102:3000"
     volumes:
@@ -85,9 +77,7 @@ services:
     networks:
       - backend
   orc3:
-    platform: linux/amd64
     build: ./conf/orchestrator/
-    container_name: orc3
     ports:
       - "23103:3000"
     volumes:
@@ -100,43 +90,6 @@ services:
       - proxysql
     networks:
       - backend
-    environment:
-      - ORCHESTRATOR_API="http://orc1:3000/api http://orc2:3000/api http://orc3:3000/api"
-  pmm:
-    image: percona/pmm-server:2
-    container_name: pmm-server
-    restart: always
-    ports:
-      - "8081:80"
-      - "4431:443"
-    networks:
-      - frontend
-      - backend
-    volumes:
-      - pmm-data:/srv
-    depends_on:
-      - proxysql
-    environment:
-      - GF_AUTH_ANONYMOUS=true
-  pmm-client:
-    platform: linux/amd64
-    build: ./conf/pmm-client/
-    container_name: pmm-client
-    networks:
-      - backend
-    volumes:
-      - ./conf/pmm-client/entrypoint.bash:/entrypoint.bash
-    depends_on:
-      - pmm
-    environment:
-      - PMM_SERVER=https://pmm-server:443/
-      - PMM_AGENT_SERVER_USERNAME=admin
-      - PMM_AGENT_SERVER_PASSWORD=admin
-      - PMM_AGENT_SERVER_INSECURE_TLS=1
 networks:
   frontend:
   backend:
-volumes:
-  pmm-data:
-    name: pmm-data
-    external: false

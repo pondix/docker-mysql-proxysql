@@ -1,0 +1,53 @@
+version: "2.0"
+services:
+  mysql1:
+    image: mysql:5.7
+    ports: 
+      - "13306:3306"
+    volumes:
+      - ./conf/mysql/mysql1:/etc/mysql/conf.d
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  mysql2:
+    image: mysql:5.7
+    ports: 
+      - "13307:3306"
+    volumes:
+      - ./conf/mysql/mysql2:/etc/mysql/conf.d
+    networks:
+      - backend
+    depends_on:
+      - mysql1
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  mysql3:
+    image: mysql:5.7
+    ports: 
+      - "13308:3306"
+    volumes:
+      - ./conf/mysql/mysql3:/etc/mysql/conf.d
+    networks:
+      - backend
+    depends_on:
+      - mysql1
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  proxysql:
+    image: proxysql/proxysql:latest
+    ports:
+      - "16033:6033"
+      - "16032:6032"
+    volumes:
+      - ./conf/proxysql/proxysql.cnf:/etc/proxysql.cnf
+    depends_on:
+      - mysql1
+      - mysql2
+      - mysql3
+    networks:
+      - frontend
+      - backend
+networks:
+  frontend:
+  backend:
