@@ -1,5 +1,13 @@
 #!/bin/bash
 
+CURRENT_MASTER=$(docker exec -ti orc1 bash -c "orchestrator-client -c topology -a mysql1:3306" | grep rw | cut -d: -f1)
+
+if [[ $CURRENT_MASTER == 'mysql2' ]];
+then
+    echo "Current primary is mysql2, exiting"
+    exit 1
+fi
+
 echo "Increasing connect_timeout and decreasing ai_delay_mp for ProxySQL... then setting HG-0 servers to OFFLINE_SOFT and disabling repl_hostgroup"
 mysql -uradmin -pradmin -h127.0.0.1 -P16032 -e"
 set mysql-connect_timeout_server_max=60000;
@@ -31,7 +39,9 @@ docker exec -ti orc1 bash -c "orchestrator-client -c graceful-master-takeover -a
 
 echo "Enabling repl_hostgroup, decreasing connect_timeout and increasing ai_delay_mp for ProxySQL"
 mysql -uradmin -pradmin -h127.0.0.1 -P16032 -e"
--- DELETE FROM mysql_servers WHERE hostname = 'mysql1';
+
+DELETE FROM mysql_servers WHERE hostname = 'mysql1';
+
 INSERT INTO mysql_replication_hostgroups (writer_hostgroup, reader_hostgroup) VALUES (0, 1);
 LOAD MYSQL SERVERS TO RUNTIME; SAVE MYSQL SERVERS TO DISK;
 
@@ -39,6 +49,8 @@ set mysql-auto_increment_delay_multiplex=5;
 set mysql-connect_timeout_server_max=10000;
 LOAD MYSQL VARIABLES TO RUNTIME; SAVE MYSQL VARIABLES TO DISK;
 
+INSERT INTO mysql_servers (hostgroup_id,hostname,status,port,max_replication_lag) VALUES (1,'mysql1','ONLINE',3306,1);
+LOAD MYSQL SERVERS TO RUNTIME; SAVE MYSQL SERVERS TO DISK;
 "
 
 docker exec -ti orc1 bash -c "orchestrator-client -c start-slave -i mysql1"
