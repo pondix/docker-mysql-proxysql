@@ -3,7 +3,7 @@
 
 printf "$BRIGHT"
 printf "##################################################################################\n"
-printf "# Started ProxySQL / Orchestrator / MySQL Docker Cluster Provisioner!            #\n"
+printf "# Started  ProxySQL / Orchestrator / MySQL / PMM Docker Cluster Provisioner!     #\n"
 printf "##################################################################################\n"
 printf "$NORMAL"
 
