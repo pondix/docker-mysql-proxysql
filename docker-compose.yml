@@ -55,6 +55,7 @@ services:
   orc1:
     platform: linux/amd64
     build: ./conf/orchestrator/
+    working_dir: /usr/local/orchestrator
     container_name: orc1
     ports:
       - "23101:3000"
@@ -71,6 +72,7 @@ services:
   orc2:
     platform: linux/amd64
     build: ./conf/orchestrator/
+    working_dir: /usr/local/orchestrator
     container_name: orc2
     ports:
       - "23102:3000"
@@ -87,6 +89,7 @@ services:
   orc3:
     platform: linux/amd64
     build: ./conf/orchestrator/
+    working_dir: /usr/local/orchestrator
     container_name: orc3
     ports:
       - "23103:3000"

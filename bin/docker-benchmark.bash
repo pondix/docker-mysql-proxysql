@@ -5,7 +5,7 @@
 MYSQL_USER=sysbench
 MYSQL_PWD=sysbench
 PREP_THREADS=10
-RUN_THREADS=10
+RUN_THREADS=32
 NUM_TABLES=10
 SIZE_TABLES=10000
 REPORT_INTERVAL=5
@@ -21,7 +21,7 @@ sysbench /opt/homebrew/Cellar/sysbench/1.0.20_3/share/sysbench/oltp_read_write.l
 sleep 5
 
 sysbench /opt/homebrew/Cellar/sysbench/1.0.20_3/share/sysbench/oltp_read_write.lua --table-size=$SIZE_TABLES --tables=$NUM_TABLES --threads=$RUN_THREADS \
- --mysql-db=sysbench --mysql-user=sysbench --mysql-password=$MYSQL_PWD --mysql-host=127.0.0.1 --mysql-port=16033 \
+ --mysql-db=sysbench --mysql-user=sysbench --mysql-password=$MYSQL_PWD --mysql-host=127.0.0.1 --mysql-port=16033 --db-ps-mode=disable \
  --time=$TIME --report-interval=$REPORT_INTERVAL --db-driver=mysql run
 
 printf "$POWDER_BLUE$BRIGHT[$(date)] Benchmarking COMPLETED!$NORMAL\n"

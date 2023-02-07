@@ -23,5 +23,8 @@ docker exec pmm-client pmm-admin add mysql --username=root --password=root --tls
 printf "$POWDER_BLUE[$(date)] Configuring mysql3 PMM agent...$LIME_YELLOW\n"
 docker exec pmm-client pmm-admin add mysql --username=root --password=root --tls --tls-skip-verify --server-url=http://admin:admin@pmm-server --query-source=perfschema mysql3 mysql3:3306
 
+printf "$POWDER_BLUE[$(date)] Configuring proxysql1 PMM agent...$LIME_YELLOW\n"
+docker exec pmm-client pmm-admin add proxysql --username=radmin --password=radmin --service-name=proxysql1 --host=proxysql --port=6032 --tls-skip-verify --server-url=http://admin:admin@pmm-server  
+
 printf "${POWDER_BLUE}All provisioning actions have completed SUCCESSFULLY!$NORMAL\n"
 

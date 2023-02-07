@@ -9,7 +9,7 @@ LOAD MYSQL SERVERS TO RUNTIME;
 SAVE MYSQL SERVERS TO DISK;
 
 DELETE FROM mysql_users;
-INSERT INTO mysql_users (username,password,active) values ('root','root',1);
+INSERT INTO mysql_users (username,password,transaction_persistent,active) values ('sysbench','sysbench',0,1);
 LOAD MYSQL USERS TO RUNTIME;
 SAVE MYSQL USERS TO DISK; 
 

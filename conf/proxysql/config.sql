@@ -1,5 +1,8 @@
+SET mysql-monitor_writer_is_also_reader='false';
+LOAD MYSQL VARIABLES TO RUNTIME;
+SAVE MYSQL VARIABLES TO DISK;
+
 DELETE FROM mysql_servers;
-INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag) VALUES (0,'mysql1',3306,1);
 INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag) VALUES (1,'mysql1',3306,1);
 INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag) VALUES (1,'mysql2',3306,1);
 INSERT INTO mysql_servers (hostgroup_id,hostname,port,max_replication_lag) VALUES (1,'mysql3',3306,1);
@@ -9,7 +12,7 @@ LOAD MYSQL SERVERS TO RUNTIME;
 SAVE MYSQL SERVERS TO DISK;
 
 DELETE FROM mysql_users;
-INSERT INTO mysql_users (username,password,active) values ('sysbench','sysbench',1);
+INSERT INTO mysql_users (username,password,transaction_persistent,active) values ('sysbench','sysbench',0,1);
 LOAD MYSQL USERS TO RUNTIME;
 SAVE MYSQL USERS TO DISK; 
 
