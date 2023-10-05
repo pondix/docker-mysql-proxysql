@@ -28,8 +28,8 @@ do
 done
 printf "$LIME_YELLOW\n"
 
-printf "$POWDER_BLUE[$(date)] Configuring replica 1...$LIME_YELLOW\n"
-mysql -h127.0.0.1 -P13307 -uroot -p$MYSQL_PWD -e"CHANGE MASTER TO MASTER_HOST='mysql1',MASTER_USER='root',MASTER_PASSWORD='$MYSQL_PWD',MASTER_AUTO_POSITION = 1;" > /dev/null 2>&1 
+printf "$POWDER_BLUE[$(date)] Configuring slave 1...$LIME_YELLOW\n"
+mysql -h127.0.0.1 -P13307 -uroot -p$MYSQL_PWD -e"RESET MASTER; CHANGE MASTER TO MASTER_HOST='mysql1',MASTER_USER='root',MASTER_PASSWORD='$MYSQL_PWD',MASTER_AUTO_POSITION = 1;" > /dev/null 2>&1 
 mysql -h127.0.0.1 -P13307 -uroot -p$MYSQL_PWD -e"START SLAVE; SET GLOBAL READ_ONLY=1;" > /dev/null 2>&1 
 
 printf "$YELLOW[$(date)] Waiting for MySQL service on replica 2"
@@ -43,8 +43,8 @@ do
 done
 printf "$LIME_YELLOW\n"
 
-printf "$POWDER_BLUE[$(date)] Configuring replica 2...$LIME_YELLOW\n"
-mysql -h127.0.0.1 -P13308 -uroot -p$MYSQL_PWD -e"CHANGE MASTER TO MASTER_HOST='mysql1',MASTER_USER='root',MASTER_PASSWORD='$MYSQL_PWD',MASTER_AUTO_POSITION = 1;" > /dev/null 2>&1 
+printf "$POWDER_BLUE[$(date)] Configuring slave 2...$LIME_YELLOW\n"
+mysql -h127.0.0.1 -P13308 -uroot -p$MYSQL_PWD -e"RESET MASTER; CHANGE MASTER TO MASTER_HOST='mysql1',MASTER_USER='root',MASTER_PASSWORD='$MYSQL_PWD',MASTER_AUTO_POSITION = 1;" > /dev/null 2>&1 
 mysql -h127.0.0.1 -P13308 -uroot -p$MYSQL_PWD -e"START SLAVE; SET GLOBAL READ_ONLY=1;" > /dev/null 2>&1 
 
 printf "$POWDER_BLUE[$(date)] Create additional database(s) on primary...['sysbench']$LIME_YELLOW\n"

@@ -39,17 +39,36 @@ in the respective subdirectory under `conf` for each container (i.e. `conf/mysql
 Orchestrator config files as needed.
 
 Note that you'll want the following pre-requisites installed on your host machine:
-- docker-ce / docker-ee (17.12+ required)
+- docker-ce / docker-ee (17.12+ required, see https://docs.docker.com/engine/install)
 - docker-compose (1.19+ required)
 - mysql-client (5.7+ required)
 - sysbench (1.0.12+ recommended if benchmarking)
 - orchestrator-client (3.0.8+ recommended if administering Orchestrator via CLI)
 - jq (required for Orchestrator)
 
-In addition if you prefer not to use docker-compose you'll also find some scripts for launching the 
-MySQL and ProxySQL instances without docker-compose in the `legacy/` directory:
-- legacy/docker-mysql.bash
-- legacy/docker-proxysql.bash
+Sample instructions for installing on Ubuntu 20.04:
+```
+# Install pre-requisites for Docker-CE & toolkit
+sudo apt-get install apt-transport-https ca-certificates curl git gnupg jq lsb-release sysbench
+git clone https://github.com/sysown/docker-mysql-proxysql.git
+
+# Install Docker-CE keyring
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker-CE packages
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+# Install Orchestrator client package
+wget https://github.com/openark/orchestrator/releases/download/v3.2.4/orchestrator-client_3.2.4_amd64.deb
+sudo dpkg -i ./orchestrator-client_3.2.4_amd64.deb 
+
+# Start containers
+cd docker-mysql-proxysql/
+./docker-compose-init.bash 
+```
 
 If you would like to run the benchmark just execute:
 

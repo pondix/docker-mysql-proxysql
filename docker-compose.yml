@@ -43,6 +43,35 @@ services:
     ports:
       - "16033:6033"
       - "16032:6032"
+      - "16080:6080"
+    volumes:
+      - ./conf/proxysql/proxysql.cnf:/etc/proxysql.cnf
+    depends_on:
+      - mysql1
+      - mysql2
+      - mysql3
+    networks:
+      - frontend
+      - backend
+  proxysql2:
+    image: proxysql/proxysql:latest
+    ports:
+      - "16043:6033"
+      - "16042:6032"
+    volumes:
+      - ./conf/proxysql/proxysql.cnf:/etc/proxysql.cnf
+    depends_on:
+      - mysql1
+      - mysql2
+      - mysql3
+    networks:
+      - frontend
+      - backend
+  proxysql3:
+    image: proxysql/proxysql:latest
+    ports:
+      - "16053:6033"
+      - "16052:6032"
     volumes:
       - ./conf/proxysql/proxysql.cnf:/etc/proxysql.cnf
     depends_on:
@@ -66,7 +95,7 @@ services:
       - mysql1
       - mysql2
       - mysql3
-      - proxysql
+      - proxysql1
     networks:
       - backend
   orc2:
@@ -83,7 +112,7 @@ services:
       - mysql1
       - mysql2
       - mysql3
-      - proxysql
+      - proxysql1
     networks:
       - backend
   orc3:
@@ -100,7 +129,7 @@ services:
       - mysql1
       - mysql2
       - mysql3
-      - proxysql
+      - proxysql1
     networks:
       - backend
     environment:
