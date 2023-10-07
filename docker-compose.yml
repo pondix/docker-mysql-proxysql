@@ -53,34 +53,6 @@ services:
     networks:
       - frontend
       - backend
-  proxysql2:
-    image: proxysql/proxysql:latest
-    ports:
-      - "16043:6033"
-      - "16042:6032"
-    volumes:
-      - ./conf/proxysql/proxysql.cnf:/etc/proxysql.cnf
-    depends_on:
-      - mysql1
-      - mysql2
-      - mysql3
-    networks:
-      - frontend
-      - backend
-  proxysql3:
-    image: proxysql/proxysql:latest
-    ports:
-      - "16053:6033"
-      - "16052:6032"
-    volumes:
-      - ./conf/proxysql/proxysql.cnf:/etc/proxysql.cnf
-    depends_on:
-      - mysql1
-      - mysql2
-      - mysql3
-    networks:
-      - frontend
-      - backend
   orc1:
     platform: linux/amd64
     build: ./conf/orchestrator/
@@ -95,7 +67,7 @@ services:
       - mysql1
       - mysql2
       - mysql3
-      - proxysql1
+      - proxysql
     networks:
       - backend
   orc2:
@@ -112,7 +84,7 @@ services:
       - mysql1
       - mysql2
       - mysql3
-      - proxysql1
+      - proxysql
     networks:
       - backend
   orc3:
@@ -129,7 +101,7 @@ services:
       - mysql1
       - mysql2
       - mysql3
-      - proxysql1
+      - proxysql
     networks:
       - backend
     environment:
