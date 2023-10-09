@@ -3,11 +3,9 @@
 
 printf "$BRIGHT"
 printf "##################################################################################\n"
-printf "# Starting MySQL / ProxySQL / Orchestrator / PMM Docker Cluster Provisioner!     #\n"
+printf "# Starting MySQL / ProxySQL / Orchestrator / PMM Docker Cluster provisioner!     #\n"
 printf "##################################################################################\n"
 printf "$NORMAL"
-
-sleep 1
 
 docker-compose up -d
 ./bin/docker-mysql-post.bash && ./bin/docker-proxy-post.bash && ./bin/docker-orchestrator-post.bash && ./bin/docker-pmm-client-bootstrap.bash
