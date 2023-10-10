@@ -43,6 +43,7 @@ services:
     ports:
       - "16033:6033"
       - "16032:6032"
+      - "16080:6080"
     volumes:
       - ./conf/proxysql/proxysql.cnf:/etc/proxysql.cnf
     depends_on:

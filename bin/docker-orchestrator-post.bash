@@ -13,7 +13,6 @@ docker exec -ti orc1 bash -c "orchestrator-client -c topology -a mysql1:3306"
 printf "$LIME_YELLOW$BRIGHT[$(date)] Your cluster name is: mysql1:3306\n"
 
 # Fixing errant transactions caused by time_zone table truncation in Oracle MySQL 5.7 container
-printf "[$(date)] Checking and correcting system table related errant transactions on replicas\n"
-docker exec -ti orc1 bash -c "orchestrator-client -c gtid-errant-inject-empty -i mysql2"
-docker exec -ti orc1 bash -c "orchestrator-client -c gtid-errant-inject-empty -i mysql3"
-
+#printf "[$(date)] Checking and correcting system table related errant transactions on replicas\n"
+#docker exec -ti orc1 bash -c "orchestrator-client -c gtid-errant-inject-empty -i mysql2"
+#docker exec -ti orc1 bash -c "orchestrator-client -c gtid-errant-inject-empty -i mysql3"
