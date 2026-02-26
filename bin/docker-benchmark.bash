@@ -13,7 +13,8 @@ NUM_TABLES=${NUM_TABLES:=10}
 SIZE_TABLES=${SIZE_TABLES:=10000}
 REPORT_INTERVAL=${REPORT_INTERVAL:=5}
 TIME=${TIME:=600}
-BENCH_TEST=${BENCH_TEST:="/usr/share/sysbench/oltp_read_write.lua"}
+BENCH_TEST=${BENCH_TEST:="/opt/homebrew/Cellar/sysbench/1.0.20_6/share/sysbench/oltp_read_write.lua"}
+#BENCH_TEST=${BENCH_TEST:="/usr/share/sysbench/oltp_read_write.lua"}
 
 printf "$RED[$(date)] Dropping 'sysbench' schema if present and preparing test dataset:$NORMAL\n"
 mysql -h127.0.0.1 -P16033 -u$MYSQL_USER -p$MYSQL_PWD -e"DROP DATABASE IF EXISTS sysbench; CREATE DATABASE IF NOT EXISTS sysbench"
